@@ -30,6 +30,7 @@ public class ArchiveTest9 extends Base{
 	private BlogPage bp;
 	private NavigationMenu nm;
 	private NavigationMenuHidden nmh;
+	private AdvancedSearchPage asp;
 	
 	@BeforeTest
 	public void setup() {
@@ -53,6 +54,7 @@ public class ArchiveTest9 extends Base{
 		this.jp = new JobsPage(driver);
 		this.peopleP = new PeoplePage(driver);
 		this.mp = new ArchiveMainPage(driver);
+		this.asp = new AdvancedSearchPage(driver);
 	}
 	
 	@Test
@@ -63,7 +65,25 @@ public class ArchiveTest9 extends Base{
 		Thread.sleep(2000);
 		this.nm.clickSearchBar();
 		Assert.assertTrue(this.nm.isAdvancedSearch());
+	}
+	
+	@Test
+	public void Test2() throws Exception{
+				
+		Thread.sleep(2000);
+		this.pl.clickPageLinks("about");
+		Thread.sleep(2000);
+		this.nm.clickSearchBar();
+		this.nm.clickAdvancedSearch();
+		Thread.sleep(2000);
+		this.asp.clickDateYear();
+		List<WebElement> dateYearValue = this.asp.getDateYearOption();
+		for(int i = 0; i < dateYearValue; i++) {
+			
+			
+		}
 		
 		
 	}
+	
 }
