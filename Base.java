@@ -20,7 +20,9 @@ public class Base {
 	public WebDriver getWebDriver() {
 		WebDriver driver = new FirefoxDriver();
 		System.setProperty("webdriver.gecko.driver", "C:\\Users\\dweomer\\Desktop\\selenium\\geckodriver.exe");
-		return driver;
+		WebDriver driver2 = driver;
+		driver.close();
+		return driver2;
 	}
 
 	public WebDriverWait waiter() {
