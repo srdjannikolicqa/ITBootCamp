@@ -14,36 +14,35 @@ import FinalProject.PageURLs;
 public class ArchiveTest7 extends Base {
 
 	WebDriver driver;
-	private LoginPage lp;
-	private NavigationMenu nm;
-	private SignUpPage sup;
+	private LoginPage loginPage;
+	private NavigationMenu navigationMenu;
+	private SignUpPage signUpPage;
 
 	@BeforeTest
 	public void setup() throws Exception {
 		System.setProperty("webdriver.gecko.driver", "C:\\Users\\dweomer\\Desktop\\selenium\\geckodriver.exe");
 		driver = new FirefoxDriver();
-
 		driver.navigate().to(PageURLs.ARCHIVE_MAIN_PAGE);
 		driver.manage().window().maximize();
-		Thread.sleep(2000);
-		this.nm = new NavigationMenu(driver);
-		this.lp = new LoginPage(driver);
-		this.sup = new SignUpPage(driver);
+		this.waitPageLoaded();
+		this.navigationMenu = new NavigationMenu(driver);
+		this.loginPage = new LoginPage(driver);
+		this.signUpPage = new SignUpPage(driver);
 	}
 
 	@Test
 	public void Test1() throws Exception {
-		this.nm.clickSignIn();
-		Assert.assertTrue(this.lp.isResetPassword());
+		this.navigationMenu.clickSignIn();
+		Assert.assertTrue(this.loginPage.isResetPassword());
 	}
 
 	@Test
 	public void Test2() throws Exception {
-		this.lp.clickSignUp();
-		this.sup.clickTermsOfService();
-		Thread.sleep(2000);
+		this.loginPage.clickSignUp();
+		this.signUpPage.clickTermsOfService();
+		this.waitPageLoaded();
 		Assert.assertTrue(getChildWindow().contains("terms"));
-		driver.close();
+		driver.quit();
 	}
 
 	public String getChildWindow() {
