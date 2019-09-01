@@ -2,6 +2,8 @@ package FinalProject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -23,28 +25,20 @@ public class PeoplePage extends Base {
 		return driver.findElements(By.cssSelector("div.bio div:not(.bio)"));
 	}
 
-	private static List<WebElement> peopleNames() {
-		return driver.findElements(By.cssSelector("div.bio div:not(.bio) b"));
-	}
-
-	private static List<WebElement> peopleJobs() {
-		return driver.findElements(By.cssSelector("div.bio div:not(.bio) i"));
-	}
-
 	// Actions
 
 	public List<String> getPeopleNamesAndJobs() {
+		String regex = ".+(?=\\n)";
 		List<String> tmp = new ArrayList<String>();
-		List<WebElement> names = peopleNames();
-		List<WebElement> jobs = peopleJobs();
-		String delimiter;
-		for (int i = 0; i < names.size(); i++) {
-			if (jobs.get(i).getText().startsWith(","))
-				delimiter = "";
-			else
-				delimiter = " ";
-			tmp.add(names.get(i).getText() + delimiter + jobs.get(i).getText());
+		List<String> tmpTrimmed = new ArrayList<String>();
+		List<WebElement> tmpWebElements = people();
+		for (int i = 0; i < tmpWebElements.size(); i++)
+			tmp.add(tmpWebElements.get(i).getText());
+		for (int i = 0; i < tmp.size(); i++) {
+			Matcher m = Pattern.compile(regex).matcher(tmp.get(i));
+			if (m.find())
+				tmpTrimmed.add(m.group(0));
 		}
-		return tmp;
+		return tmpTrimmed;
 	}
 }

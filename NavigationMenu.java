@@ -51,11 +51,14 @@ public class NavigationMenu extends Base {
 
 	// Actions
 
+	public String getSearchBarValue() {
+		return searchBar().getAttribute("value");
+	}
+
 	public boolean isAdvancedSearch() {
 		return advancedSearch().isDisplayed();
 	}
-	
-	
+
 	public void clickHiddenMenuIcons(Integer i) {
 		if (driver.findElement(By.cssSelector("li.dropdown.dropdown-ia.pull-left.hatted"))
 				.equals(hiddenMenuIcons().get(i))) {
@@ -71,7 +74,7 @@ public class NavigationMenu extends Base {
 		signIn().click();
 	}
 
-	public void autoSignIn() throws Exception{
+	public void autoSignIn() throws Exception {
 		this.clickSignIn();
 		Thread.sleep(1000);
 		new LoginPage(driver).sendTextToEmail(PageURLs.EMAIL);
@@ -79,9 +82,8 @@ public class NavigationMenu extends Base {
 		new LoginPage(driver).clickLoginButton();
 		Thread.sleep(3000);
 	}
-		
-	public void clickLoggedUsername() throws Exception {
 
+	public void clickLoggedUsername() throws Exception {
 		if (signIn().isDisplayed())
 			autoSignIn();
 		loggedUsername().click();
@@ -91,13 +93,14 @@ public class NavigationMenu extends Base {
 		upload().click();
 	}
 
-	public void clickSearchBar() throws Exception{
+	public void clickSearchBar() throws Exception {
 		if (driver.getCurrentUrl().equals(PageURLs.ARCHIVE_MAIN_PAGE))
 			new PageLinks(driver).clickPageLinks(0);
-		Thread.sleep(1000);
+		this.elementToBeClickable(searchBar());
+//		Thread.sleep(1000);
 		searchBar().click();
 	}
-			
+
 	public void sendTextToSearchBar(String searchTerm) throws Exception {
 		this.clickSearchBar();
 		searchBar().sendKeys(searchTerm, Keys.ENTER);
@@ -112,5 +115,4 @@ public class NavigationMenu extends Base {
 		this.clickSearchBar();
 		advancedSearch().click();
 	}
-
 }

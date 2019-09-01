@@ -17,7 +17,7 @@ public class PageURLs {
 	
 	// Terms
 	
-	public static final String EMAIL = "foo@gmail.com";
-	public static final String PASSWORD = "bar";
+	public static final String EMAIL = "dweomer20032003@gmail.com";
+	public static final String PASSWORD = "tvrtko";
 	public static final String SEARCH_TERM = "ITEMS";
 }

@@ -11,79 +11,61 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import FinalProject.PageURLs;
-import FinalProject.NavigationMenuHidden;
 
-public class ArchiveTest9 extends Base{
+public class ArchiveTest9 extends Base {
 
 	WebDriver driver;
-	private ArchiveMainPage mp;
-	private PeoplePage peopleP;
-	private JobsPage jp;
-	private DonatePage dp;
-	private HelpPage hp;
-	private ProjectsPage pp;
-	private ContactPage cp;
-	private AboutPage ap;
-	private LoginPage lp;
-	private UploadPage up;
-	private PageLinks pl;
-	private BlogPage bp;
-	private NavigationMenu nm;
-	private NavigationMenuHidden nmh;
-	private AdvancedSearchPage asp;
-	
+	private NavigationMenu navigationMenu;
+	private AdvancedSearchPage advancedSearchPage;
+
 	@BeforeTest
 	public void setup() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\DELL\\Desktop\\selenium\\geckodriver-v0.24.0-win64\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\dweomer\\Desktop\\selenium\\geckodriver.exe");
 		driver = new FirefoxDriver();
-		
 		driver.navigate().to(PageURLs.ARCHIVE_MAIN_PAGE);
 		driver.manage().window().maximize();
-		
-		this.nmh = new NavigationMenuHidden(driver);
-		this.nm = new NavigationMenu(driver);
-		this.bp = new BlogPage(driver);
-		this.pl = new PageLinks (driver);
-		this.up = new UploadPage(driver);
-		this.lp = new LoginPage(driver);
-		this.ap = new AboutPage(driver);
-		this.cp = new ContactPage(driver);
-		this.pp = new ProjectsPage(driver);
-		this.hp = new HelpPage(driver);
-		this.dp = new DonatePage(driver);
-		this.jp = new JobsPage(driver);
-		this.peopleP = new PeoplePage(driver);
-		this.mp = new ArchiveMainPage(driver);
-		this.asp = new AdvancedSearchPage(driver);
+		this.navigationMenu = new NavigationMenu(driver);
+		this.advancedSearchPage = new AdvancedSearchPage(driver);
 	}
-	
+
 	@Test
-	public void Test1() throws Exception{
-				
-		Thread.sleep(2000);
-		this.pl.clickPageLinks("about");
-		Thread.sleep(2000);
-		this.nm.clickSearchBar();
-		Assert.assertTrue(this.nm.isAdvancedSearch());
+	public void Test1() throws Exception {
+		this.navigationMenu.clickSearchBar();
+		Assert.assertTrue(this.navigationMenu.isAdvancedSearch());
 	}
-	
+
 	@Test
-	public void Test2() throws Exception{
-				
-		Thread.sleep(2000);
-		this.pl.clickPageLinks("about");
-		Thread.sleep(2000);
-		this.nm.clickSearchBar();
-		this.nm.clickAdvancedSearch();
-		Thread.sleep(2000);
-		this.asp.clickDateYear();
-		List<WebElement> dateYearValue = this.asp.getDateYearOption();
-		for(int i = 0; i < dateYearValue; i++) {
-			
-			
-		}
-		
-		
+	public void Test2() throws Exception {
+		this.navigationMenu.clickAdvancedSearch();
+		this.advancedSearchPage.clickDateYear();
+		setYear("2015");
+		setMonth("09");
+		setDay("09");
+		this.advancedSearchPage.clickAdvancedSearchButton();
+		this.waitPageLoaded();
+		Assert.assertTrue(driver.getCurrentUrl().contains("?query=date%3A2015-09-09")
+				&& this.navigationMenu.getSearchBarValue().contains("date:2015-09-09"));
+		driver.close();
 	}
-	
+
+	private void setYear(String year) {
+		List<WebElement> dateYearValue = this.advancedSearchPage.getDateYearOption();
+		for (int i = 0; i < dateYearValue.size(); i++)
+			if (dateYearValue.get(i).getText().contains(year))
+				dateYearValue.get(i).click();
+	}
+
+	private void setMonth(String month) {
+		List<WebElement> dateMonthValue = this.advancedSearchPage.getDateMonthOption();
+		for (int i = 0; i < dateMonthValue.size(); i++)
+			if (dateMonthValue.get(i).getText().contains(month))
+				dateMonthValue.get(i).click();
+	}
+
+	private void setDay(String day) {
+		List<WebElement> dateDayValue = this.advancedSearchPage.getDateDayOption();
+		for (int i = 0; i < dateDayValue.size(); i++)
+			if (dateDayValue.get(i).getText().contains(day))
+				dateDayValue.get(i).click();
+	}
 }

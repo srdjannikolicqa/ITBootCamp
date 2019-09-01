@@ -40,6 +40,18 @@ public class AdvancedSearchPage extends Base{
 		return driver.findElements(By.cssSelector("div.col-sm-7 [name='date_year'] option"));
 	}
 	
+	private static List<WebElement> dateMonthValue() {
+		return driver.findElements(By.cssSelector("div.col-sm-7 [name='date_month'] option"));
+	}
+	
+	private static List<WebElement> dateDayValue() {
+		return driver.findElements(By.cssSelector("div.col-sm-7 [name='date_day'] option"));
+	}
+	
+	private static WebElement advancedSearchButton() {
+		return driver.findElement(By.cssSelector("center input.btn.btn-primary"));
+	}
+	
 	// Actions
 	
 	public void clickDateYear() {
@@ -58,5 +70,15 @@ public class AdvancedSearchPage extends Base{
 		return dateYearValue();
 	}
 	
+	public List<WebElement> getDateMonthOption() {
+		return dateMonthValue();
+	}
 	
+	public List<WebElement> getDateDayOption() {
+		return dateDayValue();
+	}
+	
+	public void clickAdvancedSearchButton() {
+		advancedSearchButton().click();
+	}
 }
