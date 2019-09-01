@@ -12,36 +12,35 @@ import org.testng.annotations.Test;
 
 import FinalProject.PageURLs;
 
-public class ArchiveTest6 extends Base{
+public class ArchiveTest6 extends Base {
 
 	WebDriver driver;
-	private LoginPage lp;
-	private NavigationMenu nm;
-	
+	private LoginPage loginPage;
+	private NavigationMenu navigationMenu;
+
 	@BeforeTest
-	public void setup() throws Exception{
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\DELL\\Desktop\\selenium\\geckodriver-v0.24.0-win64\\geckodriver.exe");
+	public void setup() throws Exception {
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\dweomer\\Desktop\\selenium\\geckodriver.exe");
 		driver = new FirefoxDriver();
 		driver.navigate().to(PageURLs.ARCHIVE_MAIN_PAGE);
 		driver.manage().window().maximize();
-		Thread.sleep(2000);
-		this.nm = new NavigationMenu(driver);
-		this.lp = new LoginPage(driver);
+		this.waitPageLoaded();
+		this.navigationMenu = new NavigationMenu(driver);
+		this.loginPage = new LoginPage(driver);
 	}
-	
+
 	@Test
 	public void Test1() {
-		this.nm.clickSignIn();
-		Assert.assertTrue(this.lp.isLoginButtonVisible());
+		this.navigationMenu.clickSignIn();
+		Assert.assertTrue(this.loginPage.isLoginButtonVisible());
 	}
-	
+
 	@Test
-	public void Test2() throws Exception{
-		this.lp.sendTextToEmail(PageURLs.EMAIL);
-		this.lp.sendTextToPassword(PageURLs.PASSWORD);
-		this.lp.clickLoginButton();
-		Thread.sleep(2000);
-		Assert.assertTrue(this.lp.getLoginErrorText().contains("Email address and/or Password incorrect."));
+	public void Test2() throws Exception {
+		this.loginPage.sendTextToEmail("foo@gmail.com");
+		this.loginPage.sendTextToPassword("bar");
+		this.loginPage.clickLoginButton();
+		Assert.assertTrue(this.loginPage.getLoginErrorText().contains("Email address and/or Password incorrect."));
 		driver.close();
 	}
 }
