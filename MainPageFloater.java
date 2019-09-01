@@ -39,7 +39,6 @@ public class MainPageFloater extends Base{
 	private static WebElement floaterSearchOptions(){
 		return driver.findElement(By.cssSelector("#search_options"));
 	}
-		
 	
 	// Actions
 	

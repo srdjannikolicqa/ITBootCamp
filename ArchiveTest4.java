@@ -13,7 +13,7 @@ import FinalProject.PageURLs;
 public class ArchiveTest4 extends Base {
 
 	WebDriver driver;
-	private MainPageFloater mpf;
+	private MainPageFloater mainPageFloater;
 
 	@BeforeTest
 	public void setup() {
@@ -21,21 +21,21 @@ public class ArchiveTest4 extends Base {
 		driver = new FirefoxDriver();
 		driver.navigate().to(PageURLs.ARCHIVE_MAIN_PAGE);
 		driver.manage().window().maximize();
-		this.mpf = new MainPageFloater(driver);
+		this.mainPageFloater = new MainPageFloater(driver);
 	}
 
 	@Test
 	public void Test1() throws Exception {
 		Thread.sleep(2000);
-		this.mpf.clickFloaterSearch();
-		Assert.assertTrue(this.mpf.isFloaterSearchOptionsActive());
+		this.mainPageFloater.clickFloaterSearch();
+		Assert.assertTrue(this.mainPageFloater.isFloaterSearchOptionsActive());
 	}
 	
 	@Test
 	public void Test2() throws Exception {
 		Thread.sleep(2000);
-		this.mpf.sendTextToFloaterSearch("qa");
-		this.mpf.clickFloaterGoButton();
+		this.mainPageFloater.sendTextToFloaterSearch("qa");
+		this.mainPageFloater.clickFloaterGoButton();
 		Thread.sleep(2000);
 		Assert.assertTrue(driver.getCurrentUrl().contains("?query=qa"));
 		driver.close();

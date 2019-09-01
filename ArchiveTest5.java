@@ -13,7 +13,7 @@ import FinalProject.PageURLs;
 public class ArchiveTest5 extends Base {
 
 	WebDriver driver;
-	private NavigationMenu nm;
+	private NavigationMenu navigationMenu;
 
 	@BeforeTest
 	public void setup() {
@@ -21,14 +21,12 @@ public class ArchiveTest5 extends Base {
 		driver = new FirefoxDriver();
 		driver.navigate().to(PageURLs.ARCHIVE_MAIN_PAGE);
 		driver.manage().window().maximize();
-		this.nm = new NavigationMenu(driver);
+		this.navigationMenu = new NavigationMenu(driver);
 	}
 
 	@Test
 	public void Test1() throws Exception {
-		Thread.sleep(2000);
-		this.nm.clickUpload();
-		Thread.sleep(2000);
+		this.navigationMenu.clickUpload();
 		Assert.assertEquals(driver.findElement(By.cssSelector("#maincontent > div > p > b:nth-child(5)")).getText(),
 				"Log in or Sign up");
 		driver.close();
