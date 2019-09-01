@@ -26,17 +26,15 @@ public class ArchiveTest4 extends Base {
 
 	@Test
 	public void Test1() throws Exception {
-		Thread.sleep(2000);
 		this.mainPageFloater.clickFloaterSearch();
 		Assert.assertTrue(this.mainPageFloater.isFloaterSearchOptionsActive());
 	}
 	
 	@Test
 	public void Test2() throws Exception {
-		Thread.sleep(2000);
 		this.mainPageFloater.sendTextToFloaterSearch("qa");
 		this.mainPageFloater.clickFloaterGoButton();
-		Thread.sleep(2000);
+		this.waitPageLoaded();
 		Assert.assertTrue(driver.getCurrentUrl().contains("?query=qa"));
 		driver.close();
 	}
